@@ -1,12 +1,26 @@
-import {useState} from 'react'
-import Button from 'react-bootstrap/Button'
-import Modal from 'react-bootstrap/Modal'
+import { useState } from 'react';
+import {useNavigate, useParams} from 'react-router-dom';
+import { delReservation } from '../../api/reservationApi';
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
 
-function CancelBtn () {
-    const [show, setShow] = useState(false)
+function ReservationModal() {
+    const [show, setShow] = useState(false);
+    const navigate = useNavigate();
 
-    const onClose = () => setShow(false)
-    const onShow = () => setShow(true)
+    const onClose = () => setShow(false);
+    const onShow = () => setShow(true);
+    const {createdReservationId} = useParams()
+
+    const onClickDel = () => {
+        if(createdReservationId) {
+            delReservation(createdReservationId).then(() => {
+                navigate({pathname: '/reservationDeleteComplete'});
+            }).catch(error => console.error(error));
+        } else {
+            console.error("reservationId is not defined");
+        }
+    };
 
     return (
         <>
@@ -22,16 +36,14 @@ function CancelBtn () {
                         <Button variant='warning' className='cancelNoBtn me-2' onClick={onClose}>
                             아니오
                         </Button>
-                        <a href='/reservationDeleteComplete'>
-                            <Button variant='warning' className='cancelYesBtn'>
-                                예
-                            </Button>
-                        </a>
+                        <Button variant='warning' className='cancelYesBtn' onClick={onClickDel}>
+                            예
+                        </Button>
                     </div>
-                </Modal.Body>      
+                </Modal.Body>
             </Modal>
         </>
-    )
+    );
 }
 
-export default CancelBtn
+export default ReservationModal;

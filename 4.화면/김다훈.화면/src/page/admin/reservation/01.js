@@ -5,13 +5,13 @@ import {Link} from 'react-router-dom';
 
 const AdminReservation = () => {
     const reservations = [
-        {reservationId: 1, reservationDate: '2024-07-11', price: 16000, restaurantName: '김삼보', people: 2},
-        {reservationId: 2, reservationDate: '2024-07-11', price: 12000, restaurantName: '시골밥상', people: 1},
-        {reservationId: 3, reservationDate: '2024-07-11', price: 16000, restaurantName: '명륜진사갈비', people: 2},
-        {reservationId: 4, reservationDate: '2024-07-11', price: 12000, restaurantName: '락궁', people: 2},
-        {reservationId: 5, reservationDate: '2024-07-11', price: 8000, restaurantName: '천지천', people: 1},
-        {reservationId: 6, reservationDate: '2024-07-11', price: 23000, restaurantName: '비룡각', people: 4},
-        {reservationId: 7, reservationDate: '2024-07-10', price: 16000, restaurantName: '탕후루', people: 3}
+        {reservationId: 1, reservationDate: '2024-07-11', price: 16000, restaurantName: '김삼보', peopleNum: 2},
+        {reservationId: 2, reservationDate: '2024-07-11', price: 12000, restaurantName: '시골밥상', peopleNum: 1},
+        {reservationId: 3, reservationDate: '2024-07-11', price: 16000, restaurantName: '명륜진사갈비', peopleNum: 2},
+        {reservationId: 4, reservationDate: '2024-07-11', price: 12000, restaurantName: '락궁', peopleNum: 2},
+        {reservationId: 5, reservationDate: '2024-07-11', price: 8000, restaurantName: '천지천', peopleNum: 1},
+        {reservationId: 6, reservationDate: '2024-07-11', price: 23000, restaurantName: '비룡각', peopleNum: 4},
+        {reservationId: 7, reservationDate: '2024-07-10', price: 16000, restaurantName: '탕후루', peopleNum: 3}
     ]
 
     return (
@@ -53,7 +53,7 @@ const AdminReservation = () => {
                             </td>
                             <td>
                                 <Link variant='link-dark' to={`/adminReservationRead/${reservation.reservationId}`} style={{ textDecoration: 'none', color: 'inherit' }}>
-                                    {reservation.people}
+                                    {reservation.peopleNum}
                                 </Link>
                             </td>
                         </tr>
@@ -61,19 +61,19 @@ const AdminReservation = () => {
                     </tbody>
                 </table>
                 <nav aria-label="Page navigation example" className='d-flex justify-content-center p-4' >
-                    <ul class="pagination" id='paging'>
-                        <li class="page-item" id='paging' >
-                            <a class="page-link" aria-label="Previous" id='paging'>
+                    <ul className="pagination" id='paging'>
+                        <li className="page-item" id='paging' >
+                            <a className="page-link" aria-label="Previous" id='paging'>
                                 <span aria-hidden="true">&laquo;</span>
                             </a>
                         </li>
-                        <li class="page-item" ><a class="page-link" href="#" id='paging'>1</a></li>
-                        <li class="page-item"><a class="page-link" href="#" id='paging'>2</a></li>
-                        <li class="page-item"><a class="page-link" href="#" id='paging'>3</a></li>
-                        <li class="page-item"><a class="page-link" href="#" id='paging'>4</a></li>
-                        <li class="page-item"><a class="page-link" href="#" id='paging'>5</a></li>
-                        <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Next" id='paging'>
+                        <li className="page-item" ><a className="page-link" href="#" id='paging'>1</a></li>
+                        <li className="page-item"><a className="page-link" href="#" id='paging'>2</a></li>
+                        <li className="page-item"><a className="page-link" href="#" id='paging'>3</a></li>
+                        <li className="page-item"><a className="page-link" href="#" id='paging'>4</a></li>
+                        <li className="page-item"><a className="page-link" href="#" id='paging'>5</a></li>
+                        <li className="page-item">
+                            <a className="page-link" href="#" aria-label="Next" id='paging'>
                                 <span aria-hidden="true" >&raquo;</span>
                             </a>
                         </li>

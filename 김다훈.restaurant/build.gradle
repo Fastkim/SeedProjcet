@@ -30,8 +30,11 @@ dependencies {
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	runtimeOnly 'com.oracle.database.jdbc:ojdbc11'
 	annotationProcessor 'org.projectlombok:lombok'
+	implementation 'com.googlecode.json-simple:json-simple:1.1.1'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+	testCompileOnly 'org.projectlombok:lombok'
+	testAnnotationProcessor 'org.projectlombok:lombok'
 	implementation 'org.modelmapper:modelmapper:3.1.1'
 	// dto와 entity의 다리역할을 해주는 modelmapper dependency
 	// Gradle groovy와 kootlen의 차이는 dependencies의 문법차이이다.

@@ -252,7 +252,7 @@
 
 /* reservation.01.js css */
 
-.reservationListBtn, .reservationCancelBtn {
+.reservationListBtn, .reservationCancelBtn, .backtoRestaurantBtn {
     --bs-btn-padding-y: 0.25rem; 
     --bs-btn-padding-x: 1.5rem; 
     --bs-btn-font-size: 1rem;

@@ -123,7 +123,7 @@ const rootRouter = createBrowserRouter([
         element: <Suspense><ReservationCreate/></Suspense>
     },
     {
-        path: '/reservationRead',
+        path: '/reservationRead/:createdReservationId',
         element: <Suspense><ReservationRead/></Suspense>
     },
     {

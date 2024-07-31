@@ -16,7 +16,7 @@ const ReservationDeleteComplete = () => {
             </p>
             <div className='d-flex justify-content-center'>
                 <a href='/restaurantList'>
-                    <Button variant='warning' className='mb-5'>예약목록 바로가기</Button>
+                    <Button variant='warning' className='mb-5'>식당목록 바로가기</Button>
                 </a>
             </div>
         </UserLayout>

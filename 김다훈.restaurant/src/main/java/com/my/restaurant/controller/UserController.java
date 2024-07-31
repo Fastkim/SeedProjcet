@@ -15,12 +15,4 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("user")
 public class UserController {
 	private final UserService userService;
-	
-	@GetMapping("{userNo}") // 컨트롤러는 Dto를 다루고 repository는 entity를 다룬다.
-	public UserDto getUser(String userId, String userPw) { //PathVariable: url에 입력된 매개변수를 읽는다. ex) user/1
-		return userService.getUser(userNo);
-	}
-	
-	@GetMapping("get")
-	
 }
