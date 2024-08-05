@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useCallback, useState, useEffect} from 'react';
 import { Form, Row, Col, Button } from 'react-bootstrap';
 import { addReservation } from '../../api/reservationApi';
 import { useNavigate } from 'react-router-dom';
@@ -7,11 +7,30 @@ import MyBackButton from "../navigation/02";
 
 const ReservationCreate = () => {
     const [reservation, setReservation] = useState({
-        reservationDate: '',
+        userName: 'ekgns019',
+        reservationId: 0,
+        restaurantName: '명륜진사갈비 성남점',
+        price: '16,900', // Optional, add as necessary
         peopleNum: '',
+        reservationDate: '',
         reservationTime: '',
-        price: 0, // Optional, add as necessary
     });
+
+    const [isReservationDate, setIsReservationDate] = useState(false);
+    const [isPeopleNum, setIsPeopleNum] = useState(false);
+    const [isReservationTime, setIsReservationTime] = useState(false);
+
+    const checkData = useCallback(() => {
+        if(reservation.reservationDate && reservation.peopleNum && reservation.reservationTime) {
+            setIsReservationDate(true);
+            setIsPeopleNum(true);
+            setIsReservationTime(true);
+        }
+    }, [reservation])
+
+    useEffect(() => {
+        checkData();
+    }, [checkData])
 
     const onChange = (e) => {
         const { name, value } = e.target;
@@ -23,13 +42,19 @@ const ReservationCreate = () => {
 
     const navigate = useNavigate();
 
+    // 02.js에 파라미터보내기
+    // const params = new URLSearchParams({
+    //     restaurantName: reservation.restaurantName,
+    //     price: reservation.price
+    // })
+
     const onClickAdd = () => {
         addReservation(reservation).then(response => {
             const createdReservationId = response.reservationId;
             if(createdReservationId) {
                 navigate({
                     pathname:`../reservationRead/${createdReservationId}`,
-                    // search:`김다훈`
+                    // search: `?${params.toString()}`
                 });
             }
         }).catch(response => alert(response));
@@ -69,13 +94,14 @@ const ReservationCreate = () => {
                             name="reservationTime"
                             value={reservation.reservationTime}
                             onChange={onChange}>
+                            <option>예약시간 선택</option>
                             <option value="19:00">19:00</option>
                             <option value="19:30">19:30</option>
                             <option value="20:00">20:00</option>
                         </Form.Select>
                     </div>
                     <div className='d-flex justify-content-center mt-2'>
-                        <Button variant='warning' onClick={onClickAdd}>예약하기</Button>
+                        <Button variant='warning' onClick={onClickAdd} disabled={!(isReservationDate && isReservationTime && isPeopleNum)}>예약하기</Button>
                     </div>
                 </Col>
             </Row>

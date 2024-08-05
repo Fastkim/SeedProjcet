@@ -4,6 +4,8 @@ import com.my.restaurant.domain.entity.reservation.Reservation;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -30,6 +32,6 @@ public class Restaurant {
     @Column(nullable = false)
     private boolean isReservationAvailable;
 
-    @OneToOne(mappedBy = "restaurant")
-    private Reservation reservation;
+    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL, orphanRemoval = true) //orphanRemoval = true => 수정과정에서 Null로 변한 객체를 DELETE하도록 한다 자동으로
+    private List<Reservation> reservations;
 }

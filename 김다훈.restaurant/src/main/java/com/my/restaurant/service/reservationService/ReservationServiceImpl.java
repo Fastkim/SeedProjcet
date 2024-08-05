@@ -1,8 +1,8 @@
 package com.my.restaurant.service.reservationService;
 
 
-import com.my.restaurant.domain.dto.reservationDto.PageRequestDto;
-import com.my.restaurant.domain.dto.reservationDto.PageResponseDto;
+import com.my.restaurant.domain.dto.PageRequestDto;
+import com.my.restaurant.domain.dto.PageResponseDto;
 import com.my.restaurant.domain.dto.reservationDto.ReservationDto;
 import com.my.restaurant.domain.entity.reservation.Reservation;
 import com.my.restaurant.repository.reservationRepository.ReservationRepository;
@@ -38,7 +38,7 @@ public class ReservationServiceImpl implements ReservationService {
         Reservation reservation = modelMapper.map(reservationDto, Reservation.class);
         Reservation result = reservationRepository.save(reservation);
         ReservationDto dtoResult = modelMapper.map(result, ReservationDto.class);
-        return dtoResult;  // 생성된 예약 ID 설정
+        return dtoResult;
     }
 
     // User나 admin에서 예약을 삭제(User입장에서는 취소)하면 User에게 알림이 가게 한다??

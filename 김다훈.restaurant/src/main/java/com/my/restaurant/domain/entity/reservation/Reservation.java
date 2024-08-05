@@ -19,13 +19,14 @@ public class Reservation {
     @GeneratedValue(strategy= GenerationType.IDENTITY, generator="reservationSequence")
     @SequenceGenerator(name="reservationSequence", sequenceName="reservation_seq", allocationSize=1)
     private Long reservationId;
-    private String userId;
+    private String userName;
     private LocalDate reservationDate;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "restaurant_id") // FK 매핑
     private Restaurant restaurant;
-    private Long price;
+    private String restaurantName;
+    private String price;
     private LocalTime reservationTime;
     private Long peopleNum;
 }

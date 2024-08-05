@@ -1,8 +1,8 @@
 package com.my.restaurant.controller.reservationController;
 
 
-import com.my.restaurant.domain.dto.reservationDto.PageRequestDto;
-import com.my.restaurant.domain.dto.reservationDto.PageResponseDto;
+import com.my.restaurant.domain.dto.PageRequestDto;
+import com.my.restaurant.domain.dto.PageResponseDto;
 import com.my.restaurant.domain.dto.reservationDto.ReservationDto;
 import com.my.restaurant.service.reservationService.ReservationService;
 import lombok.RequiredArgsConstructor;

@@ -1,7 +1,7 @@
 package com.my.restaurant.service.reservationService;
 
-import com.my.restaurant.domain.dto.reservationDto.PageRequestDto;
-import com.my.restaurant.domain.dto.reservationDto.PageResponseDto;
+import com.my.restaurant.domain.dto.PageRequestDto;
+import com.my.restaurant.domain.dto.PageResponseDto;
 import com.my.restaurant.domain.dto.reservationDto.ReservationDto;
 
 public interface ReservationService {

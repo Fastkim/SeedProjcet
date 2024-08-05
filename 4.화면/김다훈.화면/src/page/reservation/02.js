@@ -10,7 +10,7 @@ const ReservationRead = () => {
     const [reservation, setReservation] = useState({
         reservationId: 0,
         reservationDate: '',
-        restaurantName: '',
+        restaurant: '',
         price: 0,
         reservationTime: '',
         peopleNum: ''

@@ -1,22 +1,30 @@
-const Paging = ({response, toList}) => {
-    return ( // 이전버튼
-        <div className='m-6 flex justify-center'>
-            {response.prev ?
-                <div className='m-2 p-2 w-16 text-center font-bold text-blue-400'
-                     onClick={() => toList({page: response.prevPage})}> Prev
-                </div> : <></>}
-            {response.pageNums.map(pageNum =>
-                <div key={pageNum}
-                     className={`m-2 p-2 w-12 text-center rounded shadow-md text-white
-                    ${response.currentPage == pageNum ? 'bg-gray-500' : 'bg-blue-500'}`}
-                     onClick={() => toList({page: pageNum})}> {pageNum}
-                </div>)}
-            {response.next ?
-                <div className='m-2 p-2 w-16 text-center font-bold text-blue-400'
-                     onClick={() => toList({page: response.nextPage})}>Next
-                </div> : <></>}
-        </div>
-    )
-}
+import React from 'react';
+import Pagination from 'react-bootstrap/Pagination';
 
-export default Paging
+const Paging = ({ response, toList }) => {
+    const { prev, next, prevPage, nextPage, pageNums, currentPage } = response;
+
+    return (
+        <div className="m-6 d-flex align-items-center justify-content-center" >
+            <Pagination >
+                {prev && (
+                    <Pagination.Prev  onClick={() => toList({ page: prevPage })} />
+                )}
+                {pageNums.map((pageNum) => (
+                    <Pagination.Item
+                        key={pageNum}
+                        active={currentPage === pageNum}
+                        onClick={() => toList({ page: pageNum })}
+                    >
+                        {pageNum}
+                    </Pagination.Item>
+                ))}
+                {next && (
+                    <Pagination.Next onClick={() => toList({ page: nextPage })} />
+                )}
+            </Pagination>
+        </div>
+    );
+};
+
+export default Paging;

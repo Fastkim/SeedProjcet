@@ -69,8 +69,6 @@ const UserLogin = () => {
             } else if(response.userName === null || response.userPw === null) {
                 console.log(response.userPw);
                 alert("아이디나 비밀번호를 입력해주세요.");
-            } else if(response.status === 500) {
-                alert("아이디나 비밀번호가 일치하지 않습니다.")
             }
             else if(response.userName === userLogin.userName) {
                 // id, pw 모두 일치
@@ -81,6 +79,8 @@ const UserLogin = () => {
             }
             // 작업 완료 되면 페이지 이동(새로고침)
             navigate(`/${response.userId}`);
+        }).catch(error => {
+            alert("아이디나 비밀번호가 일치하지 않습니다.")
         })
     }, [userLogin])
 
