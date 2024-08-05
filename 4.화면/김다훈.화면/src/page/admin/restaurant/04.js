@@ -1,6 +1,6 @@
 import React from 'react';
 import AdminLayout from '../AdminLayout';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 const DeleteAdminRestaurant = () => {
@@ -13,11 +13,11 @@ const DeleteAdminRestaurant = () => {
                         <hr className="mb-4" />
                         <p className="mb-5">식당 삭제가 정상적으로 처리되었습니다.</p>
                         <div className='d-flex justify-content-center my-5'>
-                        <Link to='/adminRestaurant' className='d-block'>
-                            <a className='btn btn-warning btn-outline-warning p-2 btn-sm'
-                                href='#'
-                                role='button'>식당목록화면 바로가기</a>
-                        </Link>
+                            <Link to='/adminRestaurant'>
+                                <Button variant="warning" className="btn-outline-warning p-2 btn-sm">
+                                    식당목록화면 바로가기
+                                </Button>
+                            </Link>
                         </div>
                     </Col>
                 </Row>

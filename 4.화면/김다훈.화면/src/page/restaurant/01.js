@@ -1,64 +1,79 @@
-import UserLayout from '../UserLayout'
-import {Link} from 'react-router-dom'
-import {Row, Col} from 'react-bootstrap'
-import MyBackButton from '../navigation/02'
+import React, { useState, useEffect } from 'react';
+import UserLayout from '../UserLayout';
+import { Link } from 'react-router-dom';
+import { Row, Col, Pagination } from 'react-bootstrap';
+import MyBackButton from '../navigation/02';
+import { getRestaurants } from '../../api/restaurantApi';
+
 const RestaurantList = () => {
-    return(
+    const [restaurants, setRestaurants] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
+
+    useEffect(() => {
+        fetchRestaurants();
+    }, [currentPage]);
+
+    const fetchRestaurants = async () => {
+        try {
+            const response = await getRestaurants(currentPage);
+            setRestaurants(response.restaurants);
+            setTotalPages(response.totalPages);
+        } catch (error) {
+            console.error("Error fetching restaurants:", error);
+        }
+    };
+
+    return (
         <UserLayout>
             <MyBackButton pageName={'식당 목록'}/>
-            <Link to={'/restaurantDetail'} id='deleteLinkCss'>
-                <Row>
-                    <Col>
-                        <div className='restaurantImg'>식당이미지</div>
-                    </Col>
-                    <Col>
-                        <div className='restaurantImg'>식당이미지</div>
-                    </Col>
-                </Row>
-            </Link>
-            <Row>
-                <Col>
-                    <div className='restaurantName'>시골밥상</div>
-                </Col>
-                <Col>
-                    <div className='restaurantName'>명륜진사갈비 성남점 </div>
-                </Col>
-            </Row>
-            <Link to={'/restaurantDetail'} id='deleteLinkCss'>
-                <Row>
-                    <Col>
-                        <div className='restaurantImg'>식당이미지</div>
-                    </Col>
-                    <Col>
-                        <div className='restaurantImg'>식당이미지</div>
-                    </Col>
-                </Row>
-            </Link>
-            <Row>
-                <Col>
-                    <div className='restaurantName'>김삼보</div>
-                </Col>
-                <Col>
-                    <div className='restaurantName'>한강</div>
-                </Col>
-            </Row>
-            <nav aria-label="Page navigation example" className='d-flex justify-content-center p-4' >
-                <ul class="pagination" id='paging'>
-                    <li class="page-item" id='paging' >
-                        <a class="page-link" aria-label="Previous" id='paging'>
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    </li>
-                    <li class="page-item" ><a class="page-link" href="#" id='paging'>1</a></li>
-                    <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Next" id='paging'>
-                            <span aria-hidden="true" >&raquo;</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
+            {restaurants.map((restaurant, index) => (
+                index % 2 === 0 && (
+                    <React.Fragment key={restaurant.restaurantId}>
+                        <Row>
+                            <Col>
+                                <Link to={`/restaurantDetail/${restaurants[index].restaurantId}`} id='deleteLinkCss'>
+                                    <div className='restaurantImg'>
+                                        {restaurant.imageUrl ?
+                                            <img src={restaurant.imageUrl} alt={restaurant.restaurantName} /> :
+                                            <div>식당이미지</div>
+                                        }
+                                    </div>
+                                    <div className='restaurantName'>{restaurants[index].restaurantName}</div>
+                                </Link>
+                            </Col>
+                            {restaurants[index + 1] && (
+                                <Col>
+                                    <Link to={`/restaurantDetail/${restaurants[index + 1].restaurantId}`} id='deleteLinkCss'>
+                                        <div className='restaurantImg'>
+                                            {restaurants[index + 1].imageUrl ?
+                                                <img src={restaurants[index + 1].imageUrl} alt={restaurants[index + 1].restaurantName} /> :
+                                                <div>식당이미지</div>
+                                            }
+                                        </div>
+                                        <div className='restaurantName'>{restaurants[index + 1].restaurantName}</div>
+                                    </Link>
+                                </Col>
+                            )}
+                        </Row>
+                    </React.Fragment>
+                )
+            ))}
+            <Pagination className='d-flex justify-content-center p-4'>
+                <Pagination.Prev onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))} />
+                {[...Array(totalPages).keys()].map(number => (
+                    <Pagination.Item
+                        key={number + 1}
+                        active={number + 1 === currentPage}
+                        onClick={() => setCurrentPage(number + 1)}
+                    >
+                        {number + 1}
+                    </Pagination.Item>
+                ))}
+                <Pagination.Next onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))} />
+            </Pagination>
         </UserLayout>
-    )
-}
+    );
+};
 
-export default RestaurantList
+export default RestaurantList;

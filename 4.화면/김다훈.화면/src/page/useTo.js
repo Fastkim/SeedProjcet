@@ -17,7 +17,7 @@ const useTo = () => {
     const size = getNum(query.get('size'), 5)
     const queryDefault = createSearchParams({page, size}).toString() // URL의 쿼리문자열을 String타입으로 만듬
 
-    const toList = param => {
+    const toUserList = param => {
         let query = ''
         if(param) {
             const page = getNum(param.page, 1)
@@ -31,12 +31,31 @@ const useTo = () => {
         })
     }
 
-    const toGet = num => navigate({
+    const toAdvertisementList = param => {
+        let query = ''
+        if(param) {
+            const page = getNum(param.page, 1)
+            const size = getNum(param.size, 5)
+            query = createSearchParams({page, size}).toString()
+        } else query = queryDefault
+
+        navigate({
+            pathname: '/adminAdvertisement',
+            search: query
+        })
+    }
+
+    const toUserGet = num => navigate({
         pathname: `/adminUserList/${num}`,
         search: queryDefault
     })
 
-    return {toList, toGet, page, size}
+    const toAdvertisementGet = num => navigate({
+        pathname: `/adminAdvertisementUpdate/${num}`,
+        search: queryDefault
+    })
+
+    return {toUserList, toAdvertisementList, toUserGet, toAdvertisementGet, page, size}
 }
 
 export default useTo

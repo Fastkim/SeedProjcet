@@ -4,6 +4,7 @@ import { Form, Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+// import advertisementImage from 'advertisementImage';
 
 const AdminAdvertisementCreate = () => {
     const [restaurantName, setRestaurantName] = useState('');
@@ -13,12 +14,14 @@ const AdminAdvertisementCreate = () => {
 
     const navigate = useNavigate(); // 페이지 이동을 위해 useNavigate 훅 사용
 
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         const advertisementData = {
             restaurantName,
             advertisementTitle,
             advertisementContent,
+            advertisementImage
         };
 
     try {
@@ -34,7 +37,6 @@ const AdminAdvertisementCreate = () => {
         console.error('There was an error saving the advertisement!', error);
     }
 };
-
     return (
         <>
             <AdminLayout>
@@ -61,14 +63,15 @@ const AdminAdvertisementCreate = () => {
                             </div>
                         </div>
                         <hr />
-                        <div className='border mb-4 p-4 d-flex align-items-center justify-content-center fs-3 fw-bold h-50' style={{ height: '150px' }}>
-                            식당이미지
-                        </div>
+                        <img src={`${advertisementImage}`} className='border mb-4 p-4 d-flex align-items-center justify-content-center fs-3 fw-bold h-50' style={{ height: '150px' }}>
+
+                        </img>
+
                         <Form.Group controlId="formFile" className="mb-3">
                             <Form.Control
                                 type="file"
                                 className="fileUploadButton"
-                                onChange={(e) => setAdvertisementImage(e.target.files[0])}
+                                onChange={(e) => setAdvertisementImage(URL.createObjectURL(e.target.files[0]))}
                             />
                         </Form.Group>
                         <hr />

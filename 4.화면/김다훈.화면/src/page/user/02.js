@@ -305,8 +305,8 @@ const UserSignUp = () => {
                                               onChange(event)
                                           }}/>
                         </Col>
-                        <Col xs={3}>
-                            <Button variant="warning" onClick={onClickSendPhoneNumber} disabled={!isPhoneNumber}>인증번호<br/>발송</Button>
+                        <Col className='d-flex align-items-center justify-content-center' xs={3}>
+                            <Button variant="warning" onClick={onClickSendPhoneNumber} disabled={!isPhoneNumber}>인증번호발송</Button>
                         </Col>
                     </Row>
                     <Row className={'mt-3 ms-2'}>{user.phoneNumber.length > 0 &&
@@ -321,7 +321,7 @@ const UserSignUp = () => {
                             <Form.Control type="text" placeholder="인증번호를 입력하세요." name='checkSMS' value={user.checkSMS}
                                           onChange={onChange} className='w-100'/>
                         </Col>
-                        <Col xs={3}>
+                        <Col className='d-flex align-items-center justify-content-center' xs={3}>
                             <Button variant="warning" onClick={checkSMS}>인증번호 확인</Button>
                         </Col>
                     </Row>

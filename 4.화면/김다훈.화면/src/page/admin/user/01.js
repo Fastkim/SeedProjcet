@@ -22,8 +22,6 @@ const AdminUser = () => {
     }, [page, size, refresh])
 
 
-
-
     // 검색 함수
     const searchUser = async () => {
         try {

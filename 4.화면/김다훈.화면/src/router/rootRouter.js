@@ -224,7 +224,7 @@ const rootRouter = createBrowserRouter([
         element: <Suspense><AdminAdvertisementCreate/></Suspense>
     },
     {
-        path: '/adminAdvertisementUpdate/:id',
+        path: '/adminAdvertisementUpdate/:advertisementNo',
         element: <Suspense><AdminAdvertisementUpdate/></Suspense>
     },
     {

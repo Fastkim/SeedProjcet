@@ -53,7 +53,7 @@ const UserLogin = () => {
         setUserLogin({...userLogin})
     }
 
-    const {toGet} = useTo()
+    const {toUserGet} = useTo()
 
 
 
@@ -64,17 +64,20 @@ const UserLogin = () => {
             //     pathname: `../navCanvas/${response.userId}`
             // })
 
-            if(response.userName == undefined) {
+            if(response.userName === undefined) {
                 alert("입력하신 id가 일치하지 않습니다.");
-            } else if(response.userPw == null) {
+            } else if(response.userName === null || response.userPw === null) {
                 console.log(response.userPw);
-                alert("입력하신 비밀번호가 일치하지 않습니다.");
-            } else if(response.userName === userLogin.userName) {
+                alert("아이디나 비밀번호를 입력해주세요.");
+            } else if(response.status === 500) {
+                alert("아이디나 비밀번호가 일치하지 않습니다.")
+            }
+            else if(response.userName === userLogin.userName) {
                 // id, pw 모두 일치
                 alert("로그인에 성공하셨습니다.")
                 sessionStorage.setItem("user_Name", userLogin.userName);
                 sessionStorage.setItem("user_pw", userLogin.userPw);
-                toGet(response.userId)
+                toUserGet(response.userId)
             }
             // 작업 완료 되면 페이지 이동(새로고침)
             navigate(`/${response.userId}`);
@@ -134,7 +137,7 @@ const UserLogin = () => {
                                           onChange(event);
                                           onChangeAdmin(event);
                                       }}
-                                      defaultValue={userLogin.userName}
+                                      // defaultValue={userLogin.userName}
                         />
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formGroupPassword">

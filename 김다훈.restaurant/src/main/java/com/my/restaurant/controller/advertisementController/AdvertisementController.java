@@ -1,5 +1,7 @@
 package com.my.restaurant.controller.advertisementController;
 
+import com.my.restaurant.domain.dto.PageRequestDto;
+import com.my.restaurant.domain.dto.PageResponseDto;
 import com.my.restaurant.domain.dto.advertisementDto.AdvertisementDto;
 import com.my.restaurant.service.adverisementService.AdvertisementService;
 import lombok.RequiredArgsConstructor;
@@ -25,9 +27,10 @@ public class AdvertisementController {
     // 'AdminAdList 페이지에서 등록한 광고를 리스트에 표시하려면 백엔드에서 목록을 조회하고 이를 프론트엔드에서 표시하도록 설정
     // 광고 목록을 가져오는 API를 백엔드에 추가. 이 API는 DB에서 광고 목록을 조회하고, 이를 JSON 형식으로 반환한다.
     @GetMapping("/list")
-    public ResponseEntity<List<AdvertisementDto>> getAdvertisements() {
-        List<AdvertisementDto> advertisements = advertisementService.getAllAdvertisements();
-        return ResponseEntity.ok(advertisements);
+    public PageResponseDto<AdvertisementDto> getAdvertisements(PageRequestDto request) {
+        return advertisementService.getAllAdvertisements(request);
+//        List<AdvertisementDto> advertisements = advertisementService.getAllAdvertisements();
+//        return ResponseEntity.ok(advertisements);
     }
 
     // 광고 검색 API 백엔드에 추가

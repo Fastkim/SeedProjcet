@@ -1,43 +1,69 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import { Container, Row, Col, Button } from 'react-bootstrap';
-import UserLayout from '../UserLayout'; 
+import UserLayout from '../UserLayout';
 import MyBackButton from '../navigation/02';
+import { getRestaurant } from '../../api/restaurantApi';
 
 const RestaurantDetail = () => {
+  const [restaurant, setRestaurant] = useState(null);
+  const { restaurantId } = useParams();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    fetchRestaurant();
+  }, [restaurantId]);
+
+  const fetchRestaurant = async () => {
+    try {
+      const data = await getRestaurant(restaurantId);
+      setRestaurant(data);
+    } catch (error) {
+      console.error("Error fetching restaurant details:", error);
+    }
+  };
+
+  const handleReservation = () => {
+    navigate('/reservationCreate', { state: { restaurantId: restaurant.restaurantId } });
+  };
+
+  if (!restaurant) {
+    return <div>Loading...</div>;
+  }
+
   return (
-    <UserLayout>
-      <MyBackButton pageName={'식당 조회'}/>
-      <Container>
-        <Row className="mb-4">
-          <Col>
-            <div className="restaurantImage">
-              <div className="restaurantImageContent">
-                <div>식당이미지</div>
+      <UserLayout>
+        <MyBackButton pageName={'식당 조회'}/>
+        <Container>
+          <Row className="mb-4">
+            <Col>
+              <div className="restaurantImage">
+                {restaurant.imageUrl ?
+                    <img src={restaurant.imageUrl} alt={restaurant.restaurantName} /> :
+                    <div className="restaurantImageContent">
+                      <div>식당이미지</div>
+                    </div>
+                }
               </div>
-            </div>
-          </Col>
-        </Row>
-        
-        <Row>
-          <Col>
-            <h2>명륜진사갈비 성남점</h2>
-            <p>대표메뉴: 갈비</p>
-            <p>영업시간: 오전 9:00 ~ 오후 9:00</p>
-            <p>가격: 16,900원</p>
-            <p>
-              소개: 숯불을 원하는만큼 새롭게 갈아드립니다.!<br />
-              고기의 품질이 무한리필가게중에 제일 좋다고 자부합니다.<br />
-              손님이 드시는 음식을 제 자녀가 먹는다는 마음으로 준비합니다.
-            </p>
-            <div className="textEnd mb-5">
-              <Button className="reservationBtn" href='/reservationCreate'>
-                예약하기
-              </Button>
-            </div>
-          </Col>
-        </Row>
-      </Container>
-    </UserLayout>
+            </Col>
+          </Row>
+
+          <Row>
+            <Col>
+              <h2>{restaurant.restaurantName}</h2>
+              <p>대표메뉴: {restaurant.mainMenu}</p>
+              <p>영업시간: {restaurant.businessHours}</p>
+              <p>가격: {restaurant.price}원</p>
+              <p>소개: {restaurant.description}</p>
+              <div className="textEnd mb-5">
+                <Button className="reservationBtn" onClick={handleReservation}>
+                  예약하기
+                </Button>
+              </div>
+            </Col>
+          </Row>
+        </Container>
+      </UserLayout>
   );
 };
 
