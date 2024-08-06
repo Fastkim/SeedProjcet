@@ -24,3 +24,11 @@ export const delReservation = async reservationId => {
     const response = await axios.delete(`${prefix}/del/${reservationId}`)
     return response.data
 }
+
+// 내 예약가져오기
+export const getMyReservations = async param => {
+    const response = await axios.get(`${prefix}/reservations`, {
+        params: param
+    })
+    return response.data
+}

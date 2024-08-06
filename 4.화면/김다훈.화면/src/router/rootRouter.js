@@ -21,6 +21,7 @@ import SelectAdvertisement from '../page/advertisement/02';
 import ReservationCreate from '../page/reservation/01';
 import ReservationRead from '../page/reservation/02';
 import ReservationDeleteComplete from '../page/reservation/03';
+import MyReservation from "../page/reservation/04";
 
 import InquiryList from '../page/inquiry/01';
 import InquiryCreate from '../page/inquiry/02';
@@ -130,6 +131,10 @@ const rootRouter = createBrowserRouter([
     {
         path: '/reservationRead/:createdReservationId',
         element: <Suspense><ReservationRead/></Suspense>
+    },
+    {
+        path: '/myReservation/:userId',
+        element: <Suspense><MyReservation/></Suspense>
     },
     {
         path: '/reservationDeleteComplete',

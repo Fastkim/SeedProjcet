@@ -45,6 +45,20 @@ const useTo = () => {
         })
     }
 
+    const toReservationList = param => {
+        let query = ''
+        if(param) {
+            const page = getNum(param.page, 1)
+            const size = getNum(param.size, 5)
+            query = createSearchParams({page, size}).toString()
+        } else query = queryDefault
+
+        navigate({
+            pathname: '/myReservation',
+            search: query
+        })
+    }
+
     const toUserGet = num => navigate({
         pathname: `/adminUserList/${num}`,
         search: queryDefault
@@ -55,7 +69,13 @@ const useTo = () => {
         search: queryDefault
     })
 
-    return {toUserList, toAdvertisementList, toUserGet, toAdvertisementGet, page, size}
+    const toReservationGet = num => navigate({
+        pathname: `/reservationRead/${num}`,
+        search: queryDefault
+    })
+
+
+    return {toUserList, toAdvertisementList, toReservationList, toUserGet, toAdvertisementGet, toReservationGet, page, size}
 }
 
 export default useTo

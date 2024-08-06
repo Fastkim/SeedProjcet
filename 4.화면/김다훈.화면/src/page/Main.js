@@ -2,6 +2,7 @@ import {Link, useParams} from 'react-router-dom'
 import {Row, Col, Button, Form, InputGroup} from 'react-bootstrap'
 import UserLayout from './UserLayout';
 import {FaSearch} from 'react-icons/fa';
+import adImg from '../img/user_main/main_advertisementImg.png'
 
 
 const Main = () => {
@@ -28,8 +29,8 @@ const Main = () => {
                     </div>
                     <hr/>
                     <Row>
-                        <Link to={'/advertisementList'} id='deleteLinkCss' className='mainImg'>
-                            <p className='text-center h-75 d-flex align-items-center justify-content-center mt-4'>광고이미지</p>
+                        <Link to={'/advertisementList'} id='deleteLinkCss' className='mainImg p-0'>
+                            <img src={adImg} className={'mainAdImg'} alt={"Advertisement"} />
                         </Link>
                     </Row>
                 </Col>

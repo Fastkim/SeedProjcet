@@ -68,3 +68,10 @@ export const getUsers = async query => {
     })
     return response.data
 }
+
+export const searchUser = async param => {
+    const response = await axios.get(`${prefix}/search`, {
+           params:param
+    });
+    return response.data
+}

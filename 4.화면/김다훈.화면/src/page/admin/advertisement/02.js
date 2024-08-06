@@ -63,7 +63,9 @@ const AdminAdvertisementCreate = () => {
                             </div>
                         </div>
                         <hr />
-                        <img src={`${advertisementImage}`} className='border mb-4 p-4 d-flex align-items-center justify-content-center fs-3 fw-bold h-50' style={{ height: '150px' }}>
+                        <img src={`${advertisementImage}`}
+                             className='border mb-4 p-4 d-flex align-items-center justify-content-center fs-3 fw-bold h-50'
+                             style={{ height: '150px' }}>
 
                         </img>
 

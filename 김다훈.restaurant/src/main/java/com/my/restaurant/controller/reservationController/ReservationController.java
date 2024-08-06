@@ -8,6 +8,7 @@ import com.my.restaurant.service.reservationService.ReservationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -38,4 +39,9 @@ public class ReservationController {
         reservationService.delReservation(reservationId);
         return Map.of("result", "예약 삭제");
     }
+
+//    @GetMapping("/reservations")
+//    public PageResponseDto<ReservationDto> getReservationsByUserName(@RequestParam String userName, PageRequestDto request) {
+//        return reservationService.getReservationsByUserName(userName, request);
+//    }
 }

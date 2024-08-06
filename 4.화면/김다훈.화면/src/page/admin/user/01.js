@@ -1,43 +1,43 @@
 import AdminLayout from '../AdminLayout';
 import {Form, InputGroup, Button} from 'react-bootstrap';
 import {FaSearch} from 'react-icons/fa';
-import {useState, useEffect} from "react";
-import {getUsers} from "../../../api/userApi";
+import { IoMdArrowBack } from "react-icons/io";
+import {useState, useEffect, useCallback} from "react";
+import {getUsers, searchUser} from "../../../api/userApi";
 import useTo from "../../useTo";
 import Paging from "../../Paging";
-import {Link} from "react-router-dom";
-import axios from "axios";
+import {useNavigate} from "react-router-dom";
 
 
 const AdminUser = () => {
     const [refresh, setRefresh] = useState(false)
-    const {toGet, toList, page, size} = useTo()
-    const [response, setResponse] = useState(null)
-    const [user, setUser] = useState([]);
+    const {toUserGet, toUserList, page, size} = useTo()
+    const [response, setResponse] = useState();
+    const [findUser, setFindUser] = useState([]);
+    const [clickSearchBtn, setClickSearchBtn] = useState(false);
     const [searchType, setSearchType] = useState('선택');
     const [searchQuery, setSearchQuery] = useState('');
+    const navigate = useNavigate();
+
 
     useEffect(() => {
         getUsers({page, size}).then(response => setResponse(response))
     }, [page, size, refresh])
 
-
+    const params = {
+        type: searchType,
+        query: searchQuery
+    }
     // 검색 함수
-    const searchUser = async () => {
-        try {
-            const response = await axios.get('http://localhost:8000/user/search', {
-                params: {
-                    type: searchType,
-                    query: searchQuery
-                }
-            });
-            alert(response.data)
-            setResponse(response.data);
 
-        } catch (error) {
-            console.error('Error searching advertisements', error);
-        }
-    };
+
+    const onClicksearchUser = useCallback(() => {
+            searchUser(params).then(response => setFindUser(response));
+            setClickSearchBtn(true);
+
+    },[searchType, searchQuery])
+
+
 
     // 컴포넌트가 마운트될 때 광고 목록을 가져옴
 
@@ -57,10 +57,11 @@ const AdminUser = () => {
                         </tr>
                         </thead>
                         <tbody className='link-dark'>
-                            {response ? response.items.map(user =>
+                        {!clickSearchBtn ? (
+                            response ? response.items.map(user =>
                                 <tr key={user.userId} onClick={() => {
                                     setRefresh(!refresh)
-                                    toGet(user.userId)}}>
+                                    toUserGet(user.userId)}}>
                                     <td scope="row" className='link-dark'>
                                         {user.userId}
                                     </td>
@@ -77,12 +78,57 @@ const AdminUser = () => {
                                         {user.birthDay}
                                     </td>
                                 </tr>
-                            ) : <></>}
+                            ) : <></>) :
+                            (
+                                findUser ? findUser.map(user =>
+                                    <tr key={user.userId} onClick={() => {
+                                        setRefresh(!refresh)
+                                        toUserGet(user.userId)}}>
+                                        <td scope="row" className='link-dark'>
+                                            {user.userId}
+                                        </td>
+                                        <td>
+                                            {user.personalName}
+                                        </td>
+                                        <td>
+                                            {user.phoneNumber}
+                                        </td>
+                                        <td>
+                                            {user.userName}
+                                        </td>
+                                        <td>
+                                            {user.birthDay}
+                                        </td>
+                                    </tr>
+                                ) : <></>)
+                        }
+                        {/*{response ? response.items.map(user =>*/}
+                        {/*    <tr key={user.userId} onClick={() => {*/}
+                        {/*        setRefresh(!refresh)*/}
+                        {/*        toUserGet(user.userId)}}>*/}
+                        {/*        <td scope="row" className='link-dark'>*/}
+                        {/*            {user.userId}*/}
+                        {/*        </td>*/}
+                        {/*        <td>*/}
+                        {/*            {user.personalName}*/}
+                        {/*        </td>*/}
+                        {/*        <td>*/}
+                        {/*            {user.phoneNumber}*/}
+                        {/*        </td>*/}
+                        {/*        <td>*/}
+                        {/*            {user.userName}*/}
+                        {/*        </td>*/}
+                        {/*        <td>*/}
+                        {/*            {user.birthDay}*/}
+                        {/*        </td>*/}
+                        {/*    </tr>*/}
+                        {/*) : <></>}*/}
+
                         </tbody>
                     </table>
                 </div>
                 {/*부트스트랩 페이지네이션 (비동기처리 해야함)*/}
-                {response ? <Paging response={response} toList={toList}/> : <></>}
+                {response ? <Paging response={response} toList={toUserList}/> : <></>}
 
                 {/* 검색바 */}
                 <div className="searchContainer">
@@ -94,8 +140,11 @@ const AdminUser = () => {
                     </Form.Select>
                     <InputGroup>
                         <Form.Control type="text" placeholder="검색어를 입력하세요" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)}/>
-                        <Button variant="outlineSecondary" onClick={searchUser}>
+                        <Button variant="outlineSecondary" onClick={onClicksearchUser} disabled={!(searchQuery && searchType)}>
                             <FaSearch/>
+                        </Button>
+                        <Button variant="outlineSecondary" onClick={() => {window.location.reload();}}>
+                            <IoMdArrowBack/>
                         </Button>
                     </InputGroup>
                 </div>

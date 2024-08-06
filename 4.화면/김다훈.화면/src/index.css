@@ -46,18 +46,22 @@
 /* Main */
 .mainImg {
     width: 100%;
-    height: 18rem;
-    border: .1rem solid;
+    height: auto;
+    border: 0.1rem solid;
     font-size: 3rem;
     font-weight: bold;
     background-color: white;
     margin-top: 6rem;
+    overflow: hidden;
+    position: relative;
 }
 
-.mainReservation {
-    
-    
-    
+.mainAdImg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    margin-top: 0;
 }
 
 .foodImg {

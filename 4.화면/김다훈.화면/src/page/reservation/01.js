@@ -1,20 +1,26 @@
 import React, {useCallback, useState, useEffect} from 'react';
 import { Form, Row, Col, Button } from 'react-bootstrap';
 import { addReservation } from '../../api/reservationApi';
-import { useNavigate } from 'react-router-dom';
+import {useNavigate, useParams} from 'react-router-dom';
 import UserLayout from '../UserLayout';
 import MyBackButton from "../navigation/02";
 
 const ReservationCreate = () => {
+    let sessionStorage = window.sessionStorage;
+
     const [reservation, setReservation] = useState({
-        userName: 'ekgns019',
         reservationId: 0,
+        userId: 117,
+        restaurantId: 2,
+        userName: `${sessionStorage.getItem("user_Name")}`,
         restaurantName: '명륜진사갈비 성남점',
         price: '16,900', // Optional, add as necessary
         peopleNum: '',
         reservationDate: '',
         reservationTime: '',
     });
+
+
 
     const [isReservationDate, setIsReservationDate] = useState(false);
     const [isPeopleNum, setIsPeopleNum] = useState(false);
@@ -51,6 +57,7 @@ const ReservationCreate = () => {
     const onClickAdd = () => {
         addReservation(reservation).then(response => {
             const createdReservationId = response.reservationId;
+            alert(response);
             if(createdReservationId) {
                 navigate({
                     pathname:`../reservationRead/${createdReservationId}`,

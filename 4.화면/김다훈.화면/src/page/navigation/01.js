@@ -36,7 +36,7 @@ const NavCanvas = ({userId}) => {
                              </Navbar>
                              <Navbar>
                                  <Container>
-                                 <Navbar.Brand href="/reservationRead/:createdReservationId">내 예약</Navbar.Brand>
+                                 <Navbar.Brand href={`/myReservation/${userId}`}>내 예약</Navbar.Brand>
                                  </Container>
                              </Navbar>
                              <Navbar>
