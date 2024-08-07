@@ -4,16 +4,13 @@ import { Form, Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-// import advertisementImage from 'advertisementImage';
 
 const AdminAdvertisementCreate = () => {
     const [restaurantName, setRestaurantName] = useState('');
     const [advertisementTitle, setAdvertisementTitle] = useState('');
     const [advertisementContent, setAdvertisementContent] = useState('');
     const [advertisementImage, setAdvertisementImage] = useState(null); // 파일 상태 추가
-
-    const navigate = useNavigate(); // 페이지 이동을 위해 useNavigate 훅 사용
-
+    const navigate = useNavigate();                               // 페이지 이동을 위해 useNavigate 훅 사용
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -24,19 +21,20 @@ const AdminAdvertisementCreate = () => {
             advertisementImage
         };
 
-    try {
-        const response = await axios.post('http://localhost:8000/advertisement/add', advertisementData, {
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
-        console.log(response.data);
-        // 성공적으로 저장된 후 adminAdvertisement 페이지로 이동
-        navigate('/adminAdvertisement');
-    } catch (error) {
-        console.error('There was an error saving the advertisement!', error);
-    }
-};
+        try {
+            const response = await axios.post('http://localhost:8000/advertisement/add', advertisementData, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            console.log(response.data);
+            // 성공적으로 저장된 후 adminAdvertisement 페이지로 이동
+            navigate('/adminAdvertisement');
+        } catch (error) {
+            console.error('There was an error saving the advertisement!', error);
+        }
+    };
+
     return (
         <>
             <AdminLayout>
@@ -62,13 +60,12 @@ const AdminAdvertisementCreate = () => {
                                 />
                             </div>
                         </div>
-                        <hr />
+                        <hr/>
+                        {/* 이미지 첨부 */}
                         <img src={`${advertisementImage}`}
                              className='border mb-4 p-4 d-flex align-items-center justify-content-center fs-3 fw-bold h-50'
-                             style={{ height: '150px' }}>
-
+                             style={{height: '150px'}}>
                         </img>
-
                         <Form.Group controlId="formFile" className="mb-3">
                             <Form.Control
                                 type="file"
@@ -76,7 +73,7 @@ const AdminAdvertisementCreate = () => {
                                 onChange={(e) => setAdvertisementImage(URL.createObjectURL(e.target.files[0]))}
                             />
                         </Form.Group>
-                        <hr />
+                        <hr/>
                         <Form.Group className="mb-3" controlId="advertisement">
                             <Form.Control
                                 as="textarea"
@@ -93,17 +90,13 @@ const AdminAdvertisementCreate = () => {
                             <Button
                                 className='btn btn-primary btn-outline-warning mx-1 my-5 p-2 btn-sm'
                                 onClick={handleSubmit}
-                                style={{ background: 'orange' }}
-                            >
-                                등록
-                            </Button>
+                                style={{background: 'orange'}}
+                            > 등록 </Button>
                             <Link to='/adminAdvertisement' className='d-block'>
                                 <Button
                                     className='btn btn-primary btn-outline-warning mx-1 my-5 p-2 btn-sm'
-                                    style={{ background: 'orange' }}
-                                >
-                                    취소
-                                </Button>
+                                    style={{background: 'orange'}}
+                                > 취소 </Button>
                             </Link>
                         </div>
                     </main>

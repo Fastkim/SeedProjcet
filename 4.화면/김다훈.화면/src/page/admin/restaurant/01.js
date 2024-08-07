@@ -12,6 +12,7 @@ const AdminRestaurant = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [searchCategory, setSearchCategory] = useState('주소');
 
+
     useEffect(() => {
         fetchRestaurants();
     }, [currentPage, searchTerm, searchCategory]);
@@ -47,7 +48,7 @@ const AdminRestaurant = () => {
                         </tr>
                         </thead>
                         <tbody>
-                        {restaurants.map(restaurant => (
+                        {restaurants.map.items(restaurant => (
                             <tr key={restaurant.restaurantId}>
                                 <th scope='row'>
                                     <Link to={`/adminRestaurantUpdate/${restaurant.restaurantId}`} className='link-dark'>

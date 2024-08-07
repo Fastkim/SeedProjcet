@@ -109,7 +109,7 @@ const rootRouter = createBrowserRouter([
         element: <Suspense><AdvertisementList/></Suspense>
     },
     {
-        path: '/selectAdvertisement',
+        path: '/selectAdvertisement/:advertisementNo',
         element: <Suspense><SelectAdvertisement/></Suspense>
     },
 

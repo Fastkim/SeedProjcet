@@ -71,17 +71,25 @@ const AdminAdvertisementUpdate = () => {
                     </div>
                     <div>{advertisement.createDate}</div>
                 </div>
-                <hr />
-                <img src={advertisementImage || ''} alt=""  className='border mb-4 h-50 p-4 d-flex align-items-center justify-content-center text-center fs-3 fw-bold' style={{ height: '150px' }}/>
+                <hr/>
+                {/* 이미지 첨부 */}
+                <img src={advertisementImage || ''}
+                     alt=""
+                     className='border mb-4 h-50 p-4 d-flex align-items-center justify-content-center text-center fs-3 fw-bold'
+                     style={{height: '150px'}}
+                />
                 <Row className="justify-content-center mb-4">
                     <Col>
                         <Form.Group controlId="formFile" className="mb-3">
-                            <Form.Control type="file" className="fileUploadButton" />
+                            <Form.Control type="file" className="fileUploadButton"/>
                         </Form.Group>
                     </Col>
                 </Row>
                 <Form.Group className="mb-3" controlId="advertisement">
-                    <Form.Control as="textarea" rows={10} value={advertisementContent} onChange={(e) => setAdvertisementContent(e.target.value)}>
+                    <Form.Control as="textarea"
+                                  rows={10}
+                                  value={advertisementContent}
+                                  onChange={(e) => setAdvertisementContent(e.target.value)}>
                     </Form.Control>
                 </Form.Group>
                 <div className='p-1 mt-1'>
@@ -89,7 +97,7 @@ const AdminAdvertisementUpdate = () => {
                 </div>
                 <div className='d-flex justify-content-center mt-3'>
                     <Button variant='warning' className='fixAdBtn me-2' onClick={handleUpdate}>수정</Button>
-                    <DelAdBtn advertisementId={advertisementId} />
+                    <DelAdBtn advertisementId={advertisementId}/>
                     <Button variant='warning' className='backtoAdList' onClick={handleCancel}>취소</Button>
                 </div>
             </div>

@@ -4,16 +4,22 @@ import com.my.restaurant.domain.dto.restaurantDto.RestaurantDto;
 import com.my.restaurant.domain.entity.restaurant.Restaurant;
 import com.my.restaurant.repository.restaurantRepository.RestaurantRepository;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.ModelMap;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
+@RequiredArgsConstructor
 public class RestaurantServiceImpl implements RestaurantService {
-    @Autowired
-    private RestaurantRepository restaurantRepository;
+    private final ModelMapper modelMapper;
+    private final RestaurantRepository restaurantRepository;
 
     @Override
     public List<RestaurantDto> getAllRestaurants() {
@@ -30,12 +36,10 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     @Override
-    public RestaurantDto addRestaurant(RestaurantDto restaurantDto) {
-        if (restaurantDto.getRestaurantName() == null || restaurantDto.getRestaurantName().isEmpty()) {
-            throw new IllegalArgumentException("Restaurant name cannot be empty");
-        }
-        Restaurant restaurant = convertToEntity(restaurantDto);
-        return convertToDto(restaurantRepository.save(restaurant));
+    public void addRestaurant(RestaurantDto restaurantDto) {
+        Restaurant restaurant = modelMapper.map(restaurantDto, Restaurant.class);
+        System.out.println(restaurant);
+        restaurantRepository.save(restaurant);
     }
 
     @Override
@@ -51,8 +55,6 @@ public class RestaurantServiceImpl implements RestaurantService {
         dto.setRestaurantId(restaurant.getRestaurantId());
         dto.setRestaurantName(restaurant.getRestaurantName());
         dto.setRestaurantCategory(restaurant.getRestaurantCategory());
-        dto.setRestaurantPriceRange(restaurant.getRestaurantPriceRange());
-        dto.setReservationAvailable(restaurant.isReservationAvailable());
         return dto;
     }
 
@@ -60,8 +62,6 @@ public class RestaurantServiceImpl implements RestaurantService {
         Restaurant restaurant = new Restaurant();
         restaurant.setRestaurantName(dto.getRestaurantName());
         restaurant.setRestaurantCategory(dto.getRestaurantCategory());
-        restaurant.setRestaurantPriceRange(dto.getRestaurantPriceRange());
-        restaurant.setReservationAvailable(dto.isReservationAvailable());
         return restaurant;
     }
 }

@@ -5,12 +5,12 @@ import lombok.*;
 
 import java.time.LocalDate;
 
-@Data
+@Data                           // getterm, setter 합쳐놓은 것
 @Entity
 @Table(name="advertisements")
 @Getter
 @ToString
-@Builder //builder에 AllargsConstructor가 파라미터를 넘겨준다.
+@Builder                        //builder에 AllargsConstructor가 파라미터를 넘겨준다.
 @AllArgsConstructor
 @NoArgsConstructor
 public class Advertisement {
@@ -21,9 +21,7 @@ public class Advertisement {
     private String restaurantName;
     private String advertisementTitle;
     private String advertisementContent;
+    @Column(name = "advertisement_image", length = 255)
     private String advertisementImage;
     private LocalDate createDate;
-//    @Lob // 이미지를 저장할 필드에 @Lob 애너테이션 추가
-//    private byte[] advertisementImage; // 이미지 필드 추가
-
 }

@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 export const host = 'http://localhost:8000';
-const prefix = `${host}/api/restaurants`;
+const prefix = `${host}/restaurant`;
 
 export const getRestaurants = async () => {
     const response = await axios.get(`${prefix}`)
@@ -14,7 +14,7 @@ export const getRestaurant = async restaurantId => {
 }
 
 export const addRestaurant = async restaurant => {
-    const response = await axios.post(`${prefix}`, restaurant)
+    const response = await axios.post(`${prefix}/add`, restaurant)
     return response.data
 }
 

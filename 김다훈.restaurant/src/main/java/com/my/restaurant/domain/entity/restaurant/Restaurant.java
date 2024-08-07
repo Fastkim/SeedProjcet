@@ -4,6 +4,7 @@ import com.my.restaurant.domain.entity.reservation.Reservation;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.awt.*;
 import java.util.List;
 
 @Entity
@@ -20,17 +21,17 @@ public class Restaurant {
     @SequenceGenerator(name = "restaurantSequence", sequenceName = "restaurant_seq", allocationSize = 1)
     private Long restaurantId;
 
-    @Column(nullable = false)
     private String restaurantName;
 
-    @Column(nullable = false)
     private String restaurantCategory;
 
-    @Column(nullable = false)
-    private String restaurantPriceRange;
+    private String businessHours;
 
-    @Column(nullable = false)
-    private boolean isReservationAvailable;
+    private String price;
+
+    private String description;
+
+    private String restaurantImg;
 
     @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL, orphanRemoval = true) //orphanRemoval = true => 수정과정에서 Null로 변한 객체를 DELETE하도록 한다 자동으로
     private List<Reservation> reservations;

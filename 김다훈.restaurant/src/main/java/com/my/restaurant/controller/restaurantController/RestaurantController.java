@@ -1,17 +1,22 @@
 package com.my.restaurant.controller.restaurantController;
 
 import com.my.restaurant.domain.dto.restaurantDto.RestaurantDto;
+import com.my.restaurant.repository.userRepository.UserRepository;
 import com.my.restaurant.service.restaurantService.RestaurantService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
+@CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/restaurants")
+@RequiredArgsConstructor
+@RequestMapping("/restaurant")
 public class RestaurantController {
-    @Autowired
-    private RestaurantService restaurantService;
+    private final RestaurantService restaurantService;
+    private final UserRepository userRepository;
 
     @GetMapping
     public List<RestaurantDto> getAllRestaurants() {
@@ -23,9 +28,10 @@ public class RestaurantController {
         return restaurantService.getRestaurantById(id);
     }
 
-    @PostMapping
-    public RestaurantDto addRestaurant(@RequestBody RestaurantDto restaurantDto) {
-        return restaurantService.addRestaurant(restaurantDto);
+    @PostMapping("/add")
+    public Map<String, String> addRestaurant(@RequestBody RestaurantDto restaurantDto) {
+        restaurantService.addRestaurant(restaurantDto);
+        return Map.of("result", "RESTAURANT 추가");
     }
 
     @DeleteMapping("/{id}")

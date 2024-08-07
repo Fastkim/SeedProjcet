@@ -13,8 +13,8 @@ const AdminAdvertisementDelComplete = () => {
                 <div className='d-flex justify-content-center my-5'>
                     <Link to='/adminAdvertisement' className='d-block'>
                         <a className='btn btn-primary btn-outline-warning p-2 btn-sm'
-                            href='#'
-                            role='button'>광고목록화면 바로가기</a>
+                           href='#'
+                           role='button'>광고목록화면 바로가기</a>
                     </Link>
                 </div>
             </div>

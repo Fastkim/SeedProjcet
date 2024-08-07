@@ -11,9 +11,10 @@ import java.util.List;
 public interface AdvertisementRepository extends JpaRepository<Advertisement, Long> {
     @Query
     Advertisement findByAdvertisementNo(Long advertisementNo);
+    //Optional<Advertisement> findByAdvertisementNo(Long advertisementNo);
     List<Advertisement> findByRestaurantNameContaining(String restaurantName);
     List<Advertisement> findByCreateDate(LocalDate createDate);
-
+    List<Advertisement> findByCreateDateBetween(LocalDate startDate, LocalDate endDate);    // 날짜 범위로 검색
 
     @Query(value = "SELECT * FROM ( " +
             "  SELECT a.*, ROW_NUMBER() OVER (ORDER BY a.advertisement_no DESC) AS rn " +
@@ -24,4 +25,7 @@ public interface AdvertisementRepository extends JpaRepository<Advertisement, Lo
 
     @Query("SELECT COUNT(a) FROM Advertisement a")
     long countAdvertisements();
+
+    @Query("SELECT a FROM Advertisement a WHERE a.advertisementNo = :advertisementNo OR a.restaurantName LIKE %:restaurantName%")
+    List<Advertisement> searchAdvertisements(@Param("advertisementNo") Long advertisementNo, @Param("restaurantName") String restaurantName);
 }

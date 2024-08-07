@@ -1,5 +1,7 @@
 package com.my.restaurant.service.adverisementService;
 
+import com.my.restaurant.service.adverisementService.AdvertisementService;
+
 import com.my.restaurant.domain.dto.PageRequestDto;
 import com.my.restaurant.domain.dto.PageResponseDto;
 import com.my.restaurant.domain.dto.advertisementDto.AdvertisementDto;
@@ -16,13 +18,12 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
-
+// ServiceImpl 클래스는 서비스 구현 클래스다. (실질적인 비즈니스 로직을 구현하는 곳)
 // AdvertisementServiceImpl 클래스는 광고를 생성할 때 데이터와 현재 날짜를 설정하고, DB에 저장한다.
 // 또한, 광고 목록을 조회하고 검색할 때 DTO로 변환하여 반환한다.
-
 @Service
 @Transactional
-@RequiredArgsConstructor    //Autowired를 사용하지않고 의존성주입을 할때 사용
+@RequiredArgsConstructor                                                //Autowired를 사용하지않고 의존성주입을 할때 사용
 public class AdvertisementServiceImpl implements AdvertisementService {
     private final ModelMapper modelMapper;
     private final AdvertisementRepository advertisementRepository;
@@ -39,12 +40,21 @@ public class AdvertisementServiceImpl implements AdvertisementService {
         advertisement.setCreateDate(LocalDate.now());  // 현재 날짜 설정 (광고글 작성할 때 날짜를 직접 입력하지 않고, 실시간 작성 날짜로 자동 입력된다)
         advertisementRepository.save(advertisement);
     }
-    // 광고목록 조회
+
+    @Override
+    public List<AdvertisementDto> getAllAdvertisements() {
+        List<Advertisement> advertisementList = advertisementRepository.findAll();
+        return advertisementList.stream()
+                .map(advertisement -> modelMapper.map(advertisement, AdvertisementDto.class))
+                .collect(Collectors.toList());
+    }
+
+    // 광고목록 조회 (페이지네이션 할 때 수정해야함)
     @Override
     public PageResponseDto<AdvertisementDto> getAllAdvertisements(PageRequestDto request) {
         // Pageable 생성
         Pageable pageable = PageRequest.of(
-                request.getPage() - 1, // PageRequest는 0부터 시작하므로 -1
+                request.getPage() - 1,                            // PageRequest는 0부터 시작하므로 -1
                 request.getSize(),
                 Sort.by("advertisementNo").descending() // 정렬 필드와 방향 설정
         );
@@ -64,17 +74,14 @@ public class AdvertisementServiceImpl implements AdvertisementService {
             advertisements = advertisementList.stream()
                     .map(advertisement -> modelMapper.map(advertisement, AdvertisementDto.class))
                     .collect(Collectors.toList());
-
             // 총 사용자 수 조회
             totAdvertisementCnt = advertisementRepository.countAdvertisements();
-
         } catch (Exception e) {
             // 예외 처리: 로깅, 사용자에게 적절한 오류 메시지 전달 등
             e.printStackTrace(); // 콘솔에 예외 스택 트레이스를 출력합니다.
             throw new RuntimeException("사용자 데이터를 조회하는 중 오류가 발생했습니다.", e);
         }
-
-//       PageResponseDto 객체 생성
+        // PageResponseDto 객체 생성
         PageResponseDto<AdvertisementDto> response = PageResponseDto.<AdvertisementDto>builder()
                 .items(advertisements)
                 .request(request)
@@ -88,19 +95,29 @@ public class AdvertisementServiceImpl implements AdvertisementService {
     @Override
     public List<AdvertisementDto> searchAdvertisements(String type, String query) {
         List<Advertisement> advertisements;
-        if (type.equals("식별번호")) {
-            Long advertisementNo = Long.parseLong(query);
-            Advertisement advertisement = advertisementRepository.findByAdvertisementNo(advertisementNo);
-            advertisements = advertisement != null ? List.of(advertisement) : List.of();
-        } else if (type.equals("식당명")) {
-            advertisements = advertisementRepository.findByRestaurantNameContaining(query);
-        } else if (type.equals("작성일")) {
-            LocalDate date = LocalDate.parse(query);
-            advertisements = advertisementRepository.findByCreateDate(date);
-        } else {
-            // 날짜 형식이 잘못된 경우 빈 리스트 반환
-            advertisements = List.of();
+        try {
+            if (type.equals("식별번호")) {
+                Long advertisementNo = Long.parseLong(query);
+                Advertisement advertisement = advertisementRepository.findByAdvertisementNo(advertisementNo);
+                advertisements = advertisement != null ? List.of(advertisement) : List.of();
+            } else if (type.equals("식당명")) {
+                advertisements = advertisementRepository.findByRestaurantNameContaining(query);
+            } else {
+                advertisements = List.of();
+            }
+        } catch (NumberFormatException e) {
+            return List.of();
         }
+
+        return advertisements.stream()
+                .map(advertisement -> modelMapper.map(advertisement, AdvertisementDto.class))
+                .collect(Collectors.toList());
+    }
+
+    // 작성일 시작날짜와 끝날짜 검색 메서드
+    @Override
+    public List<AdvertisementDto> searchAdvertisementsByDateRange(LocalDate startDate, LocalDate endDate) {
+        List<Advertisement> advertisements = advertisementRepository.findByCreateDateBetween(startDate, endDate);
         return advertisements.stream()
                 .map(advertisement -> modelMapper.map(advertisement, AdvertisementDto.class))
                 .collect(Collectors.toList());
