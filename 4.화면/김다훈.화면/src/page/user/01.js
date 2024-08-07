@@ -133,6 +133,7 @@ const UserLogin = () => {
                     <Form.Group className="mb-3 mt-3"  controlId="formGroupEmail">
                         <Form.Label>ID</Form.Label>
                         <Form.Control name='userName' type="text" placeholder="아이디를 입력하세요." className='h-25'
+                                      defaultValue={cookies.rememberUserName || ""}
                                       onChange={(event) => {
                                           onChange(event);
                                           onChangeAdmin(event);

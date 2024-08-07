@@ -15,7 +15,7 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User, Long> {
     User findByUserNameAndUserPw(final String userName, final String userPw);
 
-    @Query("SELECT u.userName, u.userId from User u where u.personalName = :personalName and u.userEmail = :userEmail")
+    @Query("SELECT u.userName from User u where u.personalName = :personalName and u.userEmail = :userEmail")
     String find_id(@Param("personalName") String personalName, @Param("userEmail") String userEmail);
 
     @Query("SELECT 1 from User u where u.userName = :userName and u.userEmail = :userEmail and u.phoneNumber = :phoneNumber")

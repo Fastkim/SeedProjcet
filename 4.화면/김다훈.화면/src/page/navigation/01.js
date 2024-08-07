@@ -1,6 +1,7 @@
 import {Button, Offcanvas, Navbar, Container, Row, Col} from 'react-bootstrap'
 import {Justify} from 'react-bootstrap-icons'
 import { useState } from 'react';
+import {useCookies} from "react-cookie";
 
 
 const NavCanvas = ({userId}) => {
@@ -10,6 +11,18 @@ const NavCanvas = ({userId}) => {
 
 
     let sessionStorage = window.sessionStorage;
+
+    // const [removeCookie] = useCookies(["rememberUserName"]);
+    //
+    // const handleLogout = () => {
+    //     // 로그아웃 시 필요한 작업들
+    //     // 예를 들어, 로그인 상태를 false로 바꾸거나, 사용자 정보를 초기화하는 등의 작업
+    //     setUserLogin({ userName: "", password: "" });
+    //     if (!isRemember) {
+    //         removeCookie("rememberUserName");
+    //     }
+    // };
+
     return (
         <>
             <Button variant="primary" onClick={handleShow} className="ms-2 p-1">

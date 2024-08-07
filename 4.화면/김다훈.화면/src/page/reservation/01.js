@@ -20,8 +20,6 @@ const ReservationCreate = () => {
         reservationTime: '',
     });
 
-
-
     const [isReservationDate, setIsReservationDate] = useState(false);
     const [isPeopleNum, setIsPeopleNum] = useState(false);
     const [isReservationTime, setIsReservationTime] = useState(false);

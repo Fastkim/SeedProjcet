@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService {
 
 
 	@Override
-	public String findBy_Id(String personalName, String userEmail) {
+	public String findBy_UserName(String personalName, String userEmail) {
 		String result = "";
 		try {
 			result = userRepository.find_id(personalName, userEmail);

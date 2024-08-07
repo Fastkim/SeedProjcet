@@ -31,14 +31,12 @@ public class UserController {
 
 	@PostMapping("/findUserName")
 	public String userFindId(@RequestBody final UserFindIdDto params) {
-		String result= userService.findBy_Id(params.getPersonalName(), params.getUserEmail());
-		return result;
+        return userService.findBy_UserName(params.getPersonalName(), params.getUserEmail());
 	}
 
 	@PostMapping("/findUserPw")
 	public String userFindPw(@RequestBody final UserFindPwDto params) {
-		String result= userService.findBy_pw(params.getUserName(), params.getUserEmail(), params.getPhoneNumber());
-		return result;
+        return userService.findBy_pw(params.getUserName(), params.getUserEmail(), params.getPhoneNumber());
 	}
 
 	@PatchMapping("/passwordFix")
