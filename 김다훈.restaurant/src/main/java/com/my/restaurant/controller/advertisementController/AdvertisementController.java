@@ -13,6 +13,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequiredArgsConstructor // 의존성주입해줌
 @RequestMapping("advertisement")

@@ -10,3 +10,6 @@
 # Compiled class file
 # Ignore a specific Java class file
 김다훈.restaurant/src/main/java/com/my/restaurant/service/userService/Api.java
+
+# AWS keyPair
+../SeedProject_AWS_keyPair.pem

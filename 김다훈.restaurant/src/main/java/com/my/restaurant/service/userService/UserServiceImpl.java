@@ -45,11 +45,13 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public String findBy_UserName(String personalName, String userEmail) {
 		String result = "";
-		try {
-			result = userRepository.find_id(personalName, userEmail);
-		} catch (Exception e) {
-			e.printStackTrace();
+
+		result = userRepository.find_id(personalName, userEmail);
+		System.out.println(result);
+		if(result == null) {
+			result="error";
 		}
+
 		return result;
 	}
 

@@ -41,7 +41,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query(value = "SELECT * FROM ( " +
             "  SELECT u.*, ROW_NUMBER() OVER (ORDER BY u.user_id DESC) AS rn " +
             "  FROM users u " +
-            ") WHERE rn BETWEEN :startRow AND :endRow",
+            ") As sub WHERE rn BETWEEN :startRow AND :endRow",
             nativeQuery = true)
     List<User> findUsersWithPagination(@Param("startRow") int startRow, @Param("endRow") int endRow);
 

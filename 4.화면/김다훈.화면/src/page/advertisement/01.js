@@ -43,7 +43,7 @@ const AdvertisementList = ({children}) => {
                         <Link to={`/selectAdvertisement/${ad.advertisementNo}`} id='deleteLinkCss'>
                             <div className='border mb-4 p-4 text-center d-flex align-items-center justify-content-center advertisementImg'>
                                 {ad.advertisementImage ? <img
-                                    src={`data:image/jpeg;base64,${btoa(String.fromCharCode(...new Uint8Array(ad.advertisementImage)))}`}
+                                    src={ad.advertisementImage}
                                     alt="식당이미지"/> : '식당이미지'}
                             </div>
                         </Link>

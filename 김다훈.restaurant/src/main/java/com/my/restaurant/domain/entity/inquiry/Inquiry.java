@@ -1,5 +1,6 @@
 package com.my.restaurant.domain.entity.inquiry;
 
+import com.my.restaurant.domain.entity.user.User;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -33,4 +34,8 @@ public class Inquiry {
 
     @Column(nullable = false, length = 1000)
     private String inquiryContent;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 }

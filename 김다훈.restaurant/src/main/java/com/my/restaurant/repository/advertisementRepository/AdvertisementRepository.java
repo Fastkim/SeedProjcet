@@ -19,7 +19,7 @@ public interface AdvertisementRepository extends JpaRepository<Advertisement, Lo
     @Query(value = "SELECT * FROM ( " +
             "  SELECT a.*, ROW_NUMBER() OVER (ORDER BY a.advertisement_no DESC) AS rn " +
             "  FROM Advertisements a " +
-            ") WHERE rn BETWEEN :startRow AND :endRow",
+            ") As sub WHERE rn BETWEEN :startRow AND :endRow",
             nativeQuery = true)
     List<Advertisement> findAdvertisementsWithPagination(@Param("startRow") int startRow, @Param("endRow") int endRow);
 

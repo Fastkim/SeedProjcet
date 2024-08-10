@@ -16,4 +16,8 @@ public class Alarm {
     @SequenceGenerator(name="alarmSequence", sequenceName="alarm_seq", allocationSize=1)
     private Long alarmId;
     private String alarmMessage;
+
+    @OneToOne
+    @JoinColumn(name = "reservation_id") // FK 매핑
+    private Reservation reservation;
 }

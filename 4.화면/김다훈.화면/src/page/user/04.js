@@ -22,7 +22,7 @@ const UserFindId = () => {
 
     const onClickUserFindId = useCallback(() => {
         findUserName(findUser).then(response => {
-            if(response != null){
+            if(response !== "error"){
                 setFindUser(response);
                 alert(`회원님의 아이디는 ${response} 입니다.`)
                 navigate('/userLogin');

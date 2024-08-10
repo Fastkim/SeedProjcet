@@ -1,6 +1,7 @@
 package com.my.restaurant.domain.entity.reservation;
 
 import com.my.restaurant.domain.entity.restaurant.Restaurant;
+import com.my.restaurant.domain.entity.user.User;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -29,4 +30,8 @@ public class Reservation {
     private String price;
     private LocalTime reservationTime;
     private Long peopleNum;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 }

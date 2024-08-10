@@ -1,9 +1,12 @@
 package com.my.restaurant.domain.entity.user;
 
+import com.my.restaurant.domain.entity.inquiry.Inquiry;
+import com.my.restaurant.domain.entity.reservation.Reservation;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name="users")
@@ -23,4 +26,10 @@ public class User {
 	private String phoneNumber;
 	private LocalDate birthDay;
 	private String userEmail;
+
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Reservation> reservations;
+
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Inquiry> inquiries;
 }
